@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,6 +11,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { Link } from '@material-ui/core';
+import { currentUserContext } from '../App';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +32,8 @@ export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+  const currentUser = useContext(currentUserContext)
+
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
@@ -42,13 +46,26 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  console.log({currentUser})
+
   return (
     <div className={classes.root}>
       <MAppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            My-Blog
-          </Typography>
+          
+            <div className={classes.title}>
+                <Link href='/' variant="h6"  underline='none' style={{color:'#fff'}}>
+                  MyBlog
+                </Link>
+            </div>
+
+            <div>
+                <Link href='/users' variant="p" style={{color:'#fff',marginRight:10}}>
+                  Users
+                </Link>
+            </div>
+            
+          
           {auth && (
             <div>
               <IconButton
@@ -75,8 +92,11 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose} component='a' href='/profile'>
+                  {
+                    currentUser.user.name
+                  }
+                </MenuItem>
               </Menu>
             </div>
           )}

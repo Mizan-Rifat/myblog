@@ -6,6 +6,7 @@ import SearchBar from './SearchBar';
 import TablePagination from './TablePagination';
 import tableReducer from '../../../reducers/TableReducer.js'
 import { useQueryState } from 'react-router-use-location-state';
+import { Link } from '@material-ui/core';
 
 
 
@@ -61,7 +62,7 @@ export default function Table({data}) {
     })
     
     const [columns, setColumns] = useState([
-        'ID','Name','Email','Website'
+        'Name','Email','Website'
     ])
 
     const [columnQuery,setColumnQuery] = useQueryState('column','');
@@ -155,11 +156,12 @@ export default function Table({data}) {
           {
             state.currentData.map((user,index)=>(
               <tr className={clsx({[classes.even]: index % 2 == 0 })}>
+               
                 <td className={classes.th}>
-                  
-                  {user.id}
+                    <Link href={`/user/${user.id}`} variant='p'>
+                      {user.name}
+                    </Link>
                 </td>
-                <td className={classes.th}>{user.name}</td>
                 <td className={classes.th}>{user.email}</td>
                 <td className={classes.th}>{user.website}</td>
               </tr>

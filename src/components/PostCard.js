@@ -25,7 +25,7 @@ export default function PostCard({post,action=false}) {
         <Paper className={classes.root}>
             <Link
                 variant="h6"
-                href='#'
+                href={`/post/${post.id}`}
                 >
                 {post.title}
             </Link>
