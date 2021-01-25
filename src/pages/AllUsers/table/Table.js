@@ -76,6 +76,8 @@ export default function Table({data}) {
 
     const handleSort = (column)=>{
 
+      if(column != 'Website'){
+
         setColumnQuery(column.toLowerCase())
 
         if(sortOrder == 'asc'){
@@ -86,6 +88,7 @@ export default function Table({data}) {
         setsortOrder('asc')
         setOrderQuery('asc')
         }
+      }
 
     }
     
@@ -152,6 +155,7 @@ export default function Table({data}) {
             }
 
           </tr>
+
 
           {
             state.currentData.map((user,index)=>(

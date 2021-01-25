@@ -56,20 +56,24 @@ export default function TableHeader({label,handleSort,columnOrder,sortOrder}){
     <div className={classes.thRoot}>
       <div className="">{label}</div>
 
-      <div className={clsx(classes.sortIcon)}>
+      {
+        label != 'Website' &&
+      
+        <div className={clsx(classes.sortIcon)}>
 
-        <ArrowDropUpIcon 
-          className={clsx(classes.upIcon,{
-            [classes.greyOut] : columnOrder != label.toLowerCase() || sortOrder != 'asc'
-          })} 
-        />
-        <ArrowDropDownIcon 
-          className={clsx(classes.downIcon,{
-            [classes.greyOut] : columnOrder != label.toLowerCase() || sortOrder != 'dsc'
-          })} 
-        />
+          <ArrowDropUpIcon 
+            className={clsx(classes.upIcon,{
+              [classes.greyOut] : columnOrder != label.toLowerCase() || sortOrder != 'asc'
+            })} 
+          />
+          <ArrowDropDownIcon 
+            className={clsx(classes.downIcon,{
+              [classes.greyOut] : columnOrder != label.toLowerCase() || sortOrder != 'dsc'
+            })} 
+          />
 
-      </div>
+        </div>
+      }
     </div>
 
     </th>
