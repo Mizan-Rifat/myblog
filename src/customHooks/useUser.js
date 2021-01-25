@@ -4,36 +4,35 @@ import axios from 'axios'
 
 export default function useUser(userId) { 
     
+ 
+
     const [state, setState] = useState({
         user:{},
+        posts:[],
         fetching:true,
         loadng:false,
     })
     
+
     useEffect(() => {
 
-        console.log(JSON.parse(localStorage.getItem('createdPosts')))
+        axios.all([
+            axios.get(`${process.env.REACT_APP_DOMAIN}/users/${userId}`),
+            axios.get(`${process.env.REACT_APP_DOMAIN}/posts?userId=${userId}`),
+        ])
+        .then(axios.spread((userResponse,postsResponse)=>{
 
-        // localStorage.setItem('createdPosts',JSON.stringify([
-        //     {
-        //         body: "adaddelectus reiciendis molestiae occaecati non minima eveniet qui voluptatibus↵accusamus in eum beatae sitvel qui neque voluptates ut commodi qui incidunt↵ut animi commodi",
-        //         id: 101,
-        //         title: "dad et ea vero quia laudantium autem",
-        //         userId: 2,
-        //     }
-        // ]))
-
-        axios.get(`${process.env.REACT_APP_DOMAIN}/users/${userId}`)
-        .then(response=>{
+            const  createdPost = JSON.parse(localStorage.getItem('createdPost'))
 
             setState({
                 ...state,
-                user:response.data,
+                user:userResponse.data,
+                posts: createdPost && userResponse.data.id == 2 ?  [createdPost,...postsResponse.data] : postsResponse.data,
                 loading:false,
                 fetching:false,
             })
 
-        })
+        }))
         .catch(error=>{
             console.log({error})
 
@@ -47,6 +46,12 @@ export default function useUser(userId) {
     }, [])
 
 
+    // return {
+    //     user:state.user,
+    //     comments:state.comments,
+    //     fetching:state.fetching,
+    //     loading:state.loading,
+    // }
 
     return [
         state,

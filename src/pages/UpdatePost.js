@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect} from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -42,10 +42,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function CreatePost() {
+export default function UpdatePost(props) {
     const classes = useStyles();
 
+    const postID = props.match.params.id;
+
     const [loading, setLoading] = useState(false)
+
 
     const [formData, setFormData] = useState({
         title:'',
@@ -53,6 +56,7 @@ export default function CreatePost() {
         userId:2
     })
 
+console.log({postID})
     const handleChange = (e,field)=>{
 
         setFormData({
@@ -80,8 +84,24 @@ export default function CreatePost() {
     }
 
 
+    useEffect(() => {
+        if(postId){
+            axios.post(`${process.env.REACT_APP_DOMAIN}/posts`,formData)
+            .then(response=>{
+
+                setLoading(false)
+                localStorage.setItem('createdPost',JSON.stringify(response.data))
+
+            })
+            .catch(error=>{
+                console.log({error})
+                setLoading(false)
+            })
+        }
+    }, [])
+
   return (
-    <CompContainer title='Create New Post'>
+    <CompContainer title='Update Post'>
         <div style={{position:'relative'}}>
 
             <form onSubmit={handleSubmit} className={clsx({[classes.formDisable] : loading })}>

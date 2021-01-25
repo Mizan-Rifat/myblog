@@ -19,6 +19,7 @@ function Routes() {
 
             <Route path='/' exact component={Homepage} />
             <Route path='/post/create' component={CreatePost} />
+            <Route path='/post/update/:id' component={CreatePost} />
             <Route path='/post/:id' component={Post} />
             <Route path='/profile' component={User} />
             <Route path='/users' component={Users} />

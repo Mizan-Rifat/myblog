@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios'
+import PostReducer from '../reducers/PostReducer';
 
 
 export default function usePost(postId) {    
 
-    const [state, setState] = useState({
+
+    const [state, dispatch] = useReducer(PostReducer,{
         post:{},
         comments:[],
         fetching:true,
@@ -20,26 +22,25 @@ export default function usePost(postId) {
         ])
         .then(axios.spread((postResponse,commentsResponse)=>{
 
-            setState({
-                ...state,
-                post:postResponse.data,
-                comments:commentsResponse.data,
-                loading:false,
-                fetching:false,
+            dispatch({
+                type:'SET_POST',
+                payload:{
+                    post:postResponse.data,
+                    comments:commentsResponse.data,
+                }
             })
+
+           
 
         }))
         .catch(error=>{
             console.log({error})
-
-            setState({
-                ...state,
-                loading:false,
-                fetching:false,
-            })
         })
         
     }, [])
+
+
+    
 
 
     return [

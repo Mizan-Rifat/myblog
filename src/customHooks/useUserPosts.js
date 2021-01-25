@@ -15,9 +15,13 @@ export default function useUserPosts(userId) {
         axios.get(`${process.env.REACT_APP_DOMAIN}/posts?userId=${userId}`)
         .then(response=>{
 
+            const createdPost = JSON.parse(localStorage.getItem("createdPost"));
+
+            console.log({createdPost})
+
             setState({
                 ...state,
-                posts:response.data,
+                posts: createdPost ? [createdPost,...response.data] : response.data,
                 loading:false,
                 fetching:false,
             })

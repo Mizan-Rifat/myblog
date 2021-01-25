@@ -6,8 +6,6 @@ import CompContainer from '../../components/CompContainer';
 import PostCard from '../../components/PostCard';
 import useUser from '../../customHooks/useUser';
 import { currentUserContext } from '../../App';
-import CreatePostDialog from './CreatePostDialog';
-import useUserPosts from '../../customHooks/useUserPosts';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,22 +33,10 @@ export default function User(props) {
 
     const userId = props.match.url === '/profile' ? currentUser.user.id : props.match.params.id;
 
-    const [userState] = useUser(userId)
-    const [postState,createPost] = useUserPosts(userId)
+    const [state] = useUser(userId)
 
-    const {user,loading,fetching} = userState;
+    const {user,posts,loading,fetching} = state;
 
-    const {posts,loading:postLoading,fetching:postFetching} = postState;
-
-
-    const [openDialog, setOpenDialog] = useState(false);
-
-    // const handleClickDiaOpen = () => {
-    //     setOpen(true);
-    // };
-    // const handleClose = () => {
-    //     setOpen(false);
-    // };
 
     return (
         <Grid container spacing={1} className={classes.root}>
@@ -101,7 +87,6 @@ export default function User(props) {
 
                     </Grid>
                     
-                    <PostsContext.Provider value={{postState,createPost}}>
                     <Grid item sm={8}>
                         <CompContainer title={`${user.name}'s Posts`}>
 
@@ -113,7 +98,6 @@ export default function User(props) {
                                         variant='contained' 
                                         color='primary' 
                                         size='small'
-                                        onClick={()=>setOpenDialog(true)}
                                     >
                                         Crete new Post
                                     </Button>
@@ -133,13 +117,6 @@ export default function User(props) {
                         
                     </Grid>
 
-
-                    <CreatePostDialog 
-                        open={openDialog}
-                        setOpen={setOpenDialog}
-                    />
-
-                    </PostsContext.Provider>
                 </>
             }
 
