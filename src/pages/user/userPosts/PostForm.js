@@ -1,16 +1,12 @@
 import React, { useContext, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { PostsContext } from '.';
+import { PostsContext } from '..';
+
 
 const useStyles = makeStyles((theme) => ({
     textfield:{
@@ -40,15 +36,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function PostForm() {
+export default function PostForm({handleClose,post}) {
     const classes = useStyles();
 
-    const {postState,createPost} = useContext(PostsContext);
+    const {postState,createPost,updatePost} = useContext(PostsContext);
 
 
     const [formData, setFormData] = useState({
-        title:'',
-        body:'',
+        title: post ? post.title : '',
+        body: post ? post.body : '',
         userId:2
     })
 
@@ -63,18 +59,22 @@ export default function PostForm() {
 
     const handleSubmit =(e)=>{
       e.preventDefault()
-   
 
-      createPost(formData)
-    //   axios.post(`${process.env.REACT_APP_DOMAIN}/posts`,formData)
-    //   .then(response=>{
-    //     setLoading(false)
-    //     console.log({response})
-    //   })
-    //   .catch(error=>{
-    //       console.log({error})
-    //       setLoading(false)
-    //   })
+      if(post){
+          updatePost({
+              ...formData,
+              id:post.id
+          })
+          .then(()=>{
+            handleClose();
+          })
+      }else{
+        createPost(formData)
+        .then(()=>{
+            handleClose();
+        })
+      }
+
     }
 
   return (

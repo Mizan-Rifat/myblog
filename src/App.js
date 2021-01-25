@@ -3,6 +3,7 @@ import './App.css';
 import Appbar from './components/Appbar'
 import useUser from './customHooks/useUser';
 import Routes from './Routes';
+import LoadingCircle from './components/LoadingCircle'
 
 export const currentUserContext = createContext();
 
@@ -18,7 +19,7 @@ function App() {
       {
         currentUser.fetching ?
 
-        'loading'
+        <LoadingCircle />
 
         :
 

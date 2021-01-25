@@ -5,6 +5,7 @@ import { Divider } from '@material-ui/core';
 import { Link, Paper } from '@material-ui/core';
 import Comment from './Comment';
 import CompContainer from '../../components/CompContainer';
+import LoadingCircle from '../../components/LoadingCircle';
 import usePost from '../../customHooks/usePost';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,15 +26,15 @@ export default function Post(props) {
 
 
     return (
-        <CompContainer title='Post'>
+        <>
 
             {
                 post.fetching ? 
 
-                <p>fetching</p>
+                <LoadingCircle />
 
                 :
-                <>
+                <CompContainer title='Post'>
                     <h4>
                         {post.post.title}
                     </h4>
@@ -53,8 +54,8 @@ export default function Post(props) {
                     </div>
 
                     <LeaveCommentBox />
-                </>
+                </CompContainer>
             }
-        </CompContainer>
+        </>
     )
 }

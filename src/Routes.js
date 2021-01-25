@@ -1,8 +1,7 @@
-import { Container, CssBaseline } from '@material-ui/core';
+import { Container, } from '@material-ui/core';
 import { BrowserRouter,Switch,Route } from 'react-router-dom';
 import './App.css';
 import Homepage from './pages/Home';
-import CreatePost from './pages/CreatePost';
 import Users from './pages/allUsers';
 import User from './pages/user';
 import Post from './pages/post'
@@ -18,7 +17,6 @@ function Routes() {
           <Switch>
 
             <Route path='/' exact component={Homepage} />
-            <Route path='/post/create' component={CreatePost} />
             <Route path='/post/:id' component={Post} />
             <Route path='/profile' component={User} />
             <Route path='/users' component={Users} />

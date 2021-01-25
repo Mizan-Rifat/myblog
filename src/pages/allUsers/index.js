@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CompContainer from '../../components/CompContainer';
+import LoadingCircle from '../../components/LoadingCircle';
 import Table from './table/Table';
 import useUsers from '../../customHooks/useUsers';
 
@@ -11,24 +12,27 @@ export default function Users() {
 
 
     return (
-        <CompContainer title='Users'>
+
+
+        <>
 
           {
             users.fetching ?
 
-            <p>Fetching</p>
+            <LoadingCircle />
 
             :
           
+            <CompContainer title='Users'>
+              <Table 
 
-            <Table 
+                data={users.users}
 
-              data={users.users}
-
-            />
+              />
+            </CompContainer>
 
           }
-        </CompContainer>
+        </>
     )
 }
 

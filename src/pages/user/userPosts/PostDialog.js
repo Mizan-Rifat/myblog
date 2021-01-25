@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
-import PostForm from './PostForm';
 import { withStyles } from '@material-ui/core/styles';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
+import PostForm from './PostForm'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +51,7 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function CreatePostDialog({open,setOpen,createpost}) {
+export default function PostDialog({open,setOpen,post}) {
 
     const classes = useStyles();
 
@@ -70,14 +70,24 @@ export default function CreatePostDialog({open,setOpen,createpost}) {
         className={classes.root}
       >
 
-        <DialogTitle id="alert-dialog-title" onClose={handleClose}>Create New Post</DialogTitle>
+        <DialogTitle id="alert-dialog-title" onClose={handleClose}>
+            {
+              post ?
+              'Update Post'
+              :
+              'Create New Post'
+            }
+          </DialogTitle>
 
         
 
           <DialogContent dividers>
 
             
-            <PostForm />
+            <PostForm 
+              handleClose={handleClose}
+              post={post} 
+            />
          
 
           </DialogContent> 

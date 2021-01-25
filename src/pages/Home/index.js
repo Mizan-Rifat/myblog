@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PostCard from '../../components/PostCard';
+import LoadingCircle from '../../components/LoadingCircle';
 import axios from 'axios';
 import usePosts from '../../customHooks/usePosts';
 import { Button, CircularProgress } from '@material-ui/core';
@@ -20,13 +21,15 @@ export default function Landing() {
     const [posts, loadMore] = usePosts();
 
 
+
+
     return (
         <div>
 
             {
                 posts.fetching ? 
 
-                 <p>Fetching</p>
+                <LoadingCircle />
 
                  :
 
@@ -36,7 +39,7 @@ export default function Landing() {
             }
 
             {
-                posts.page < 10 &&
+                posts.page < 10 && posts.posts.length > 0 ?
 
                 <div className={classes.lmBtn} style={{  padding: '25px 0' }}>
                     <div style={{position: 'relative',display:'inline-block'}}>
@@ -65,6 +68,8 @@ export default function Landing() {
                         }
                     </div>
                 </div>
+
+                : ''
             }
 
             
