@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAAA,KACE,QAAS,CACT,+BAAgC,CAChC,kCAAmC,CACnC,iCACF","file":"main.597a2db9.chunk.css","sourcesContent":["body {\r\n  margin: 0;\r\n  font-family: 'Roboto',sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n"]}
